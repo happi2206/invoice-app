@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <div class="flex md:flex-col flex-row">
+    <div class="flex flex-row">
       <Nav />
       <div class="flex md:flex-col flex-row">
         <router-view />
