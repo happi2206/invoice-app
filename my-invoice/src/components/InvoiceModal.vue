@@ -1,0 +1,299 @@
+<template>
+  <div
+    @click="checkClick"
+    ref="invoiceWrap"
+    class="fixed top-0 left-0 flex flex-col w-full h-screen lg:left-16"
+  >
+    <form
+      @submit.prevent="submitForm"
+      class="relative w-full max-w-screen-md p-10 overflow-scroll text-white shadow-xl  otherbg"
+    >
+      <Loading v-show="loading" />
+      <h1 v-if="!editInvoice" class="mb-6 text-2xl font-semibold text-white">
+        New Invoice
+      </h1>
+      <h1 v-else class="mb-10 text-2xl font-bold text-white">Edit Invoice</h1>
+
+      <!-- Bill From -->
+      <div class="flex flex-col bill-from">
+        <h4 class="mb-3 text-sm font-semibold text-purple-500">Bill From</h4>
+        <div class="flex flex-col input">
+          <label for="billerStreetAddress" class="my-2 text-xs text-white"
+            >Street Address</label
+          >
+          <input
+            required
+            type="text"
+            id="billerStreetAddress"
+            class="p-1 lightotherbg"
+            v-model="billerStreetAddress"
+          />
+        </div>
+        <div class="flex mt-4 location-details">
+          <div class="flex flex-col mr-3 input">
+            <label for="billerCity" class="my-2 text-xs text-white">City</label>
+            <input
+              required
+              type="text"
+              id="billerCity"
+              class="p-1 lightotherbg"
+              v-model="billerCity"
+            />
+          </div>
+          <div class="flex flex-col mr-3 input">
+            <label for="billerZipCode" class="my-2 text-xs text-white"
+              >Zip Code</label
+            >
+            <input
+              required
+              class="p-1 lightotherbg"
+              type="text"
+              id="billerZipCode"
+              v-model="billerZipCode"
+            />
+          </div>
+          <div class="flex flex-col mr-3 input">
+            <label for="billerCountry" class="my-2 text-xs text-white"
+              >Country</label
+            >
+            <input
+              required
+              type="text"
+              class="p-1 lightotherbg"
+              id="billerCountry"
+              v-model="billerCountry"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Bill To -->
+      <div class="flex flex-col mt-4 bill-to">
+        <h4 class="mb-3 text-sm font-semibold text-purple-500">Bill To</h4>
+        <div class="flex flex-col input">
+          <label for="clientName" class="my-2 text-xs text-white"
+            >Client's Name</label
+          >
+          <input
+            required
+            type="text"
+            id="clientName"
+            class="p-1 lightotherbg"
+            v-model="clientName"
+          />
+        </div>
+        <div class="flex flex-col input">
+          <label for="clientEmail" class="my-2 text-xs text-white"
+            >Client's Email</label
+          >
+          <input
+            required
+            type="text"
+            class="p-1 lightotherbg"
+            id="clientEmail"
+            v-model="clientEmail"
+          />
+        </div>
+        <div class="flex flex-col input">
+          <label for="clientStreetAddress" class="my-2 text-xs text-white"
+            >Street Address</label
+          >
+          <input
+            required
+            type="text"
+            class="p-1 lightotherbg"
+            id="clientStreetAddress"
+            v-model="clientStreetAddress"
+          />
+        </div>
+        <div class="flex location-details">
+          <div class="flex flex-col mr-3 input">
+            <label for="clientCity" class="my-2 text-xs text-white">City</label>
+            <input
+              required
+              class="p-1 lightotherbg"
+              type="text"
+              id="clientCity"
+              v-model="clientCity"
+            />
+          </div>
+          <div class="flex flex-col mr-3 input">
+            <label for="clientZipCode" class="my-2 text-xs text-white"
+              >Zip Code</label
+            >
+            <input
+              required
+              type="text"
+              class="p-1 lightotherbg"
+              id="clientZipCode"
+              v-model="clientZipCode"
+            />
+          </div>
+          <div class="flex flex-col mr-3 input">
+            <label for="clientCountry" class="my-2 text-xs text-white"
+              >Country</label
+            >
+            <input
+              required
+              type="text"
+              id="clientCountry"
+              class="p-1 lightotherbg"
+              v-model="clientCountry"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Invoice Work Details -->
+      <div class="flex flex-col invoice-work">
+        <div class="flex payment">
+          <div class="flex flex-col mr-3 input">
+            <label for="invoiceDate" class="my-2 text-xs text-white"
+              >Invoice Date</label
+            >
+            <input
+              disabled
+              type="text"
+              id="invoiceDate"
+              class="p-1 cursor-not-allowed lightotherbg"
+              v-model="invoiceDate"
+            />
+          </div>
+          <div class="flex flex-col input">
+            <label for="paymentDueDate" class="my-2 text-xs text-white"
+              >Payment Due</label
+            >
+            <input
+              disabled
+              type="text"
+              class="p-1 cursor-not-allowed lightotherbg"
+              id="paymentDueDate"
+              v-model="paymentDueDate"
+            />
+          </div>
+        </div>
+        <div class="flex flex-col input">
+          <label for="paymentTerms" class="my-2 text-xs text-white"
+            >Payment Terms</label
+          >
+          <select
+            required
+            type="text"
+            id="paymentTerms"
+            class="p-1 lightotherbg"
+            v-model="paymentTerms"
+          >
+            <option value="30">Net 30 Days</option>
+            <option value="60">Net 60 Days</option>
+          </select>
+        </div>
+        <div class="flex flex-col input">
+          <label for="productDescription" class="my-2 text-xs text-white"
+            >Product Description</label
+          >
+          <input
+            required
+            class="p-1 lightotherbg"
+            type="text"
+            id="productDescription"
+            v-model="productDescription"
+          />
+        </div>
+        <div class="mt-8">
+          <h3 class="text-xl font-bold text-gray-500">Item List</h3>
+          <table class="block p-0 m-0 item-list">
+            <tr class="flex justify-between text-sm table-heading">
+              <th class="item-name">Item Name</th>
+              <th class="qty">Qty</th>
+              <th class="price">Price</th>
+              <th class="total">Toal</th>
+            </tr>
+            <tr
+              class="flex table-items"
+              v-for="(item, index) in invoiceItemList"
+              :key="index"
+            >
+              <td class="item-name">
+                <input type="text" v-model="item.itemName" />
+              </td>
+              <td class="qty"><input type="text" v-model="item.qty" /></td>
+              <td class="price"><input type="text" v-model="item.price" /></td>
+              <td class="flex total">
+                ${{ (item.total = item.qty * item.price) }}
+              </td>
+              <img @click="deleteInvoiceItem(item.id)" alt="" />
+            </tr>
+          </table>
+
+          <div @click="addNewInvoiceItem" class="flex button">Add New Item</div>
+        </div>
+      </div>
+
+      <!-- Save/Exit -->
+      <div class="flex save">
+        <div class="left">
+          <button type="button" @click="closeInvoice" class="red">
+            Cancel
+          </button>
+        </div>
+        <div class="flex right">
+          <button
+            v-if="!editInvoice"
+            type="submit"
+            @click="saveDraft"
+            class="dark-purple"
+          >
+            Save Draft
+          </button>
+          <button
+            v-if="!editInvoice"
+            type="submit"
+            @click="publishInvoice"
+            class="purple"
+          >
+            Create Invoice
+          </button>
+          <button v-if="editInvoice" type="sumbit" class="purple">
+            Update Invoice
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "invoiceModal",
+  data() {
+    return {
+      dateOptions: { year: "numeric", month: "short", day: "numeric" },
+      docId: null,
+      loading: null,
+      billerStreetAddress: null,
+      billerCity: null,
+      billerZipCode: null,
+      billerCountry: null,
+      clientName: null,
+      clientEmail: null,
+      clientStreetAddress: null,
+      clientCity: null,
+      clientZipCode: null,
+      clientCountry: null,
+      invoiceDateUnix: null,
+      invoiceDate: null,
+      paymentTerms: null,
+      paymentDueDateUnix: null,
+      paymentDueDate: null,
+      productDescription: null,
+      invoicePending: null,
+      invoiceDraft: null,
+      invoiceItemList: [],
+      invoiceTotal: 0,
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+</style>

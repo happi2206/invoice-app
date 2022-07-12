@@ -12,6 +12,13 @@ body {
   background-color: #a786e0;
 }
 
+.otherbg {
+  background-color: #19121f;
+}
+
+.lightotherbg {
+  background-color: #27202f;
+}
 header {
   background-color: #161118;
 }

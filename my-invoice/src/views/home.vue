@@ -6,40 +6,40 @@
           <h1 class="text-3xl font-bold">Invoices</h1>
           <span>There are 4 total invoices</span>
         </div>
-        <div class="flex justify-between">
-          <div @click="toggleFilter" class="flex flex-col" ref="filter">
+        <div class="cursor-pointer flex justify-between align-center">
+          <div @click="toggleFilter" class="flex flex-col mt-2" ref="filter">
             <div class="flex">
               <span class="text-sm">Filter by status</span>
 
-              <span class="mt-1">
+              <span class="mt-1 ml-1">
                 <Icon
-                  icon="akar-icons:arrow-down"
+                  icon="akar-icons:chevron-down"
                   color="white"
                   width="14"
                   height="14"
               /></span>
             </div>
 
-            <ul v-show="filterMenu" class="text-xs mt-3 bg-indigo-700">
-              <li class="my-1 hover:bg-sky-700 p-2">Draft</li>
-              <li class="my-1 hover:bg-sky-700 p-2">Pending</li>
-              <li class="my-1 hover:bg-sky-700 p-2">Paid</li>
-              <li class="my-1 hover:bg-sky-700 p-2">Clear Filter</li>
+            <ul v-show="filterMenu" class="text-xs mt-3 bg-purple-500">
+              <li class="my-1 hover:bg-purple-700 p-2">Draft</li>
+              <li class="my-1 hover:bg-purple-700 p-2">Pending</li>
+              <li class="my-1 hover:bg-purple-700 p-2">Paid</li>
+              <li class="my-1 hover:bg-purple-700 p-2">Clear Filter</li>
             </ul>
           </div>
 
-          <div class="ml-4">
+          <div class="ml-10">
             <div @click="newInvoice" class="flex">
-              <div class="flex">
-                <span class="mt-1">
+              <button class="flex rounded-full bg-purple-500 p-2">
+                <span class="bg-white rounded-full mt-1">
                   <Icon
                     icon="akar-icons:plus"
-                    color="white"
-                    width="14"
-                    height="14"
+                    color="black"
+                    width="12"
+                    height="12"
                 /></span>
-                <span class="text-sm">New Invoice</span>
-              </div>
+                <span class="text-sm ml-2">New Invoice</span>
+              </button>
             </div>
           </div>
         </div>
@@ -57,12 +57,19 @@ export default {
 
   data() {
     return {
-      filterMenu: true,
+      filterMenu: false,
     };
   },
 
   mounted() {
     console.log("object");
+  },
+
+  methods: {
+    toggleFilter() {
+      console.log("show filter");
+      this.filterMenu = !this.filterMenu;
+    },
   },
 };
 </script>
