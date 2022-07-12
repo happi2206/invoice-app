@@ -4,7 +4,7 @@
   <div>
     <div class="flex flex-row">
       <Nav />
-      <div class="flex md:flex-col flex-row">
+      <div class="container mx-auto px-80 py-32">
         <router-view />
       </div>
     </div>
