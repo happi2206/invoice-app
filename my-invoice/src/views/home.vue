@@ -3,26 +3,42 @@
     <div class="">
       <div class="flex justify-between">
         <div class="flex flex-col">
-          <h1 class="text-2xl font-bold">Invoices</h1>
+          <h1 class="text-3xl font-bold">Invoices</h1>
           <span>There are 4 total invoices</span>
         </div>
-        <div class="flex">
-          <div @click="toggleFilter" class="flex" ref="filter">
-            <span>Filter by status</span>
-            <Icon icon="akar-icons:arrow-down" color="white" />
+        <div class="flex justify-between">
+          <div @click="toggleFilter" class="flex flex-col" ref="filter">
+            <div class="flex">
+              <span class="text-sm">Filter by status</span>
 
-            <ul v-show="filterMenu">
-              <li>Draft</li>
-              <li>Pending</li>
-              <li>Paid</li>
-              <li>Clear Filter</li>
+              <span class="mt-1">
+                <Icon
+                  icon="akar-icons:arrow-down"
+                  color="white"
+                  width="14"
+                  height="14"
+              /></span>
+            </div>
+
+            <ul v-show="filterMenu" class="text-xs mt-3 bg-indigo-700">
+              <li class="my-1 hover:bg-sky-700 p-2">Draft</li>
+              <li class="my-1 hover:bg-sky-700 p-2">Pending</li>
+              <li class="my-1 hover:bg-sky-700 p-2">Paid</li>
+              <li class="my-1 hover:bg-sky-700 p-2">Clear Filter</li>
             </ul>
           </div>
 
-          <div>
+          <div class="ml-4">
             <div @click="newInvoice" class="flex">
               <div class="flex">
-                <Icon icon="akar-icons:plus" color="white" />
+                <span class="mt-1">
+                  <Icon
+                    icon="akar-icons:plus"
+                    color="white"
+                    width="14"
+                    height="14"
+                /></span>
+                <span class="text-sm">New Invoice</span>
               </div>
             </div>
           </div>
@@ -37,6 +53,12 @@ import { Icon } from "@iconify/vue";
 export default {
   components: {
     Icon,
+  },
+
+  data() {
+    return {
+      filterMenu: true,
+    };
   },
 
   mounted() {
