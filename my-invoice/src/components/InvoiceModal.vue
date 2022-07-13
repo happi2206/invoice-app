@@ -201,12 +201,12 @@
         </div>
         <div class="mt-8">
           <h3 class="text-xl font-bold text-gray-500">Item List</h3>
-          <table class="block p-0 m-0 item-list">
+          <table class="block p-0 m-0 mt-5 item-list">
             <tr class="flex justify-between text-sm table-heading">
               <th class="item-name">Item Name</th>
               <th class="qty">Qty</th>
               <th class="price">Price</th>
-              <th class="total">Toal</th>
+              <th class="total">Total</th>
             </tr>
             <tr
               class="flex table-items"
@@ -225,14 +225,26 @@
             </tr>
           </table>
 
-          <div @click="addNewInvoiceItem" class="flex button">Add New Item</div>
+          <button
+            @click="addNewInvoiceItem"
+            class="flex justify-center w-full p-2 mt-8 text-sm rounded-full cursor-pointer  lightotherbg button w-100"
+          >
+            <span class="mt-1 mr-1 text-purple-600"
+              ><Icon icon="akar-icons:plus"
+            /></span>
+            Add New Item
+          </button>
         </div>
       </div>
 
       <!-- Save/Exit -->
-      <div class="flex save">
+      <div class="flex justify-between mt-8">
         <div class="left">
-          <button type="button" @click="closeInvoice" class="red">
+          <button
+            type="button"
+            @click="closeInvoice"
+            class="px-4 py-2 text-sm bg-red-400 rounded-full cursor-pointer red"
+          >
             Cancel
           </button>
         </div>
@@ -241,7 +253,7 @@
             v-if="!editInvoice"
             type="submit"
             @click="saveDraft"
-            class="dark-purple"
+            class="px-4 py-2 mr-4 text-sm rounded-full cursor-pointer  lightotherbg"
           >
             Save Draft
           </button>
@@ -249,11 +261,15 @@
             v-if="!editInvoice"
             type="submit"
             @click="publishInvoice"
-            class="purple"
+            class="flex p-2 text-sm bg-purple-500 rounded-full"
           >
             Create Invoice
           </button>
-          <button v-if="editInvoice" type="sumbit" class="purple">
+          <button
+            v-if="editInvoice"
+            type="sumbit"
+            class="flex p-2 text-sm bg-purple-500 rounded-full"
+          >
             Update Invoice
           </button>
         </div>
@@ -263,8 +279,13 @@
 </template>
 
 <script>
+import { Icon } from "@iconify/vue";
+import { mapMutations } from "vuex";
 export default {
   name: "invoiceModal",
+  components: {
+    Icon,
+  },
   data() {
     return {
       dateOptions: { year: "numeric", month: "short", day: "numeric" },
@@ -291,6 +312,14 @@ export default {
       invoiceItemList: [],
       invoiceTotal: 0,
     };
+  },
+
+  methods: {
+    ...mapMutations(["TOGGLE_INVOICE"]),
+
+    closeInvoice() {
+      this.TOGGLE_INVOICE();
+    },
   },
 };
 </script>

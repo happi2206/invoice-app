@@ -6,7 +6,7 @@
           <h1 class="text-3xl font-bold">Invoices</h1>
           <span>There are 4 total invoices</span>
         </div>
-        <div class="cursor-pointer flex justify-between align-center">
+        <div class="flex justify-between cursor-pointer align-center">
           <div @click="toggleFilter" class="flex flex-col mt-2" ref="filter">
             <div class="flex">
               <span class="text-sm">Filter by status</span>
@@ -20,25 +20,25 @@
               /></span>
             </div>
 
-            <ul v-show="filterMenu" class="text-xs mt-3 bg-purple-500">
-              <li class="my-1 hover:bg-purple-700 p-2">Draft</li>
-              <li class="my-1 hover:bg-purple-700 p-2">Pending</li>
-              <li class="my-1 hover:bg-purple-700 p-2">Paid</li>
-              <li class="my-1 hover:bg-purple-700 p-2">Clear Filter</li>
+            <ul v-show="filterMenu" class="mt-3 text-xs bg-purple-500">
+              <li class="p-2 my-1 hover:bg-purple-700">Draft</li>
+              <li class="p-2 my-1 hover:bg-purple-700">Pending</li>
+              <li class="p-2 my-1 hover:bg-purple-700">Paid</li>
+              <li class="p-2 my-1 hover:bg-purple-700">Clear Filter</li>
             </ul>
           </div>
 
           <div class="ml-10">
             <div @click="newInvoice" class="flex">
-              <button class="flex rounded-full bg-purple-500 p-2">
-                <span class="bg-white rounded-full mt-1">
+              <button class="flex p-2 bg-purple-500 rounded-full">
+                <span class="mt-1 bg-white rounded-full">
                   <Icon
                     icon="akar-icons:plus"
                     color="black"
                     width="12"
                     height="12"
                 /></span>
-                <span class="text-sm ml-2">New Invoice</span>
+                <span class="ml-2 text-sm">New Invoice</span>
               </button>
             </div>
           </div>
@@ -50,6 +50,8 @@
 
 <script>
 import { Icon } from "@iconify/vue";
+import { mapMutations } from "vuex";
+
 export default {
   components: {
     Icon,
@@ -69,6 +71,12 @@ export default {
     toggleFilter() {
       console.log("show filter");
       this.filterMenu = !this.filterMenu;
+    },
+
+    ...mapMutations(["TOGGLE_INVOICE"]),
+
+    newInvoice() {
+      this.TOGGLE_INVOICE();
     },
   },
 };
