@@ -8,7 +8,7 @@
       @submit.prevent="submitForm"
       class="relative w-full max-w-screen-md p-10 overflow-scroll text-white shadow-xl  otherbg"
     >
-      <Loading v-show="loading" />
+      <!-- <Loading v-show="loading" /> -->
       <h1 v-if="!editInvoice" class="mb-6 text-2xl font-semibold text-white">
         New Invoice
       </h1>
@@ -201,32 +201,54 @@
         </div>
         <div class="mt-8">
           <h3 class="text-xl font-bold text-gray-500">Item List</h3>
-          <table class="block p-0 m-0 mt-5 item-list">
-            <tr class="flex justify-between text-sm table-heading">
+          <table class="p-0 m-0 mt-5 table-auto item-list">
+            <tr class="flex justify-between mb-4 text-sm table-heading">
               <th class="item-name">Item Name</th>
               <th class="qty">Qty</th>
               <th class="price">Price</th>
               <th class="total">Total</th>
             </tr>
             <tr
-              class="flex table-items"
+              class="flex my-1 table-items"
               v-for="(item, index) in invoiceItemList"
               :key="index"
             >
-              <td class="item-name">
-                <input type="text" v-model="item.itemName" />
+              <td class="mr-3 item-name">
+                <input
+                  type="text"
+                  v-model="item.itemName"
+                  class="p-1 lightotherbg"
+                />
               </td>
-              <td class="qty"><input type="text" v-model="item.qty" /></td>
-              <td class="price"><input type="text" v-model="item.price" /></td>
-              <td class="flex total">
+              <td class="mr-3 qty">
+                <input
+                  type="text"
+                  v-model="item.qty"
+                  class="p-1 lightotherbg"
+                />
+              </td>
+              <td class="mr-3 price">
+                <input
+                  type="text"
+                  v-model="item.price"
+                  class="p-1 lightotherbg"
+                />
+              </td>
+              <td class="flex mr-3 total">
                 ${{ (item.total = item.qty * item.price) }}
               </td>
-              <img @click="deleteInvoiceItem(item.id)" alt="" />
+
+              <span
+                @click="deleteInvoiceItem(item.id)"
+                class="mt-1 cursor-pointer"
+                ><Icon icon="ant-design:delete-filled"
+              /></span>
             </tr>
           </table>
 
           <button
             @click="addNewInvoiceItem"
+            type="button"
             class="flex justify-center w-full p-2 mt-8 text-sm rounded-full cursor-pointer  lightotherbg button w-100"
           >
             <span class="mt-1 mr-1 text-purple-600"
@@ -329,6 +351,22 @@ export default {
 
     closeInvoice() {
       this.TOGGLE_INVOICE();
+    },
+
+    addNewInvoiceItem() {
+      this.invoiceItemList.push({
+        id: 0,
+        itemName: "",
+        qty: "",
+        price: 0,
+        total: 0,
+      });
+    },
+
+    deleteInvoiceItem(id) {
+      this.invoiceItemList = this.invoiceItemList.filter(
+        (item) => item.id !== id
+      );
     },
   },
 
