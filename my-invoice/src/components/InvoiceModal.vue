@@ -201,7 +201,7 @@
         </div>
         <div class="mt-8">
           <h3 class="text-xl font-bold text-gray-500">Item List</h3>
-          <table class="p-0 m-0 mt-5 table-auto item-list">
+          <table class="block p-0 m-0 mt-5 table-auto item-list">
             <tr class="flex justify-between mb-4 text-sm table-heading">
               <th class="item-name">Item Name</th>
               <th class="qty">Qty</th>
