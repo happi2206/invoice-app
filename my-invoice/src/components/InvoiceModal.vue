@@ -301,7 +301,7 @@
 </template>
 
 <script>
-import db from "../firebase/firebaseinit";
+import { db, firebaseApp } from "../firebase/firebaseinit";
 import { Icon } from "@iconify/vue";
 import { mapMutations } from "vuex";
 import { uid } from "uid";
@@ -389,7 +389,9 @@ export default {
 
       this.calInvoiceTotal();
 
-      const database = db.collection("invoices").doc();
+      console.log(db);
+
+      const database = firebaseApp.collection("invoices").doc();
 
       await database.set({
         invoiceId: uid(6),
