@@ -5,6 +5,7 @@
     <div class="flex flex-row">
       <Nav />
       <div class="container py-32 mx-auto md:px-32 xl:px-72">
+        <Modal v-if="modalActive" />
         <transition name="invoice">
           <InvoiceModal v-if="invoiceModal" />
         </transition>
@@ -15,14 +16,24 @@
   </div>
 </template>
 <script >
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
+
 import Nav from "./components/Nav.vue";
 import InvoiceModal from "./components/InvoiceModal.vue";
+import Modal from "./components/Modal.vue";
 
 export default {
-  components: { Nav, InvoiceModal },
+  components: { Nav, InvoiceModal, Modal },
   computed: {
-    ...mapState(["invoiceModal"]),
+    ...mapState(["invoiceModal", "modalActive"]),
+  },
+
+  created() {
+    this.GET_INVOICES();
+  },
+
+  methods: {
+    ...mapActions(["GET_INVOICES"]),
   },
 };
 </script>

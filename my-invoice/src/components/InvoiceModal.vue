@@ -222,14 +222,14 @@
               </td>
               <td class="mr-3 qty">
                 <input
-                  type="text"
+                  type="number"
                   v-model="item.qty"
                   class="p-1 lightotherbg"
                 />
               </td>
               <td class="mr-3 price">
                 <input
-                  type="text"
+                  type="number"
                   v-model="item.price"
                   class="p-1 lightotherbg"
                 />
@@ -281,10 +281,17 @@
           </button>
           <button
             v-if="!editInvoice"
+            :disabled="loading"
             type="submit"
             @click="publishInvoice"
             class="flex p-2 text-sm bg-purple-500 rounded-full"
           >
+            <span v-if="loading">
+              <Icon
+                class="w-5 h-5 mr-3 animate-spin"
+                icon="fluent:spinner-ios-20-filled"
+              />
+            </span>
             Create Invoice
           </button>
           <button
@@ -302,6 +309,7 @@
 
 <script>
 import { db, firebaseApp } from "../firebase/firebaseinit";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { Icon } from "@iconify/vue";
 import { mapMutations } from "vuex";
 import { uid } from "uid";
@@ -349,7 +357,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["TOGGLE_INVOICE"]),
+    ...mapMutations(["TOGGLE_INVOICE", "TOGGLE_MODAL"]),
 
     closeInvoice() {
       this.TOGGLE_INVOICE();
@@ -387,36 +395,43 @@ export default {
         return;
       }
 
+      this.loading = true;
+
       this.calInvoiceTotal();
 
-      console.log(db);
+      const id = uid(6);
+      await setDoc(
+        doc(db, "invoices", id),
+        {
+          invoiceId: uid(6),
+          billerStreetAddress: this.billerStreetAddress,
+          billerCity: this.billerCity,
+          billerZipCode: this.billerZipCode,
+          billerCountry: this.billerCountry,
+          clientName: this.clientName,
+          clientEmail: this.clientEmail,
+          clientStreetAddress: this.clientStreetAddress,
+          clientCity: this.clientCity,
+          clientZipCode: this.clientZipCode,
+          clientCountry: this.clientCountry,
+          invoiceDate: this.invoiceDate,
+          invoiceDateUnix: this.invoiceDateUnix,
+          paymentTerms: this.paymentTerms,
+          paymentDueDate: this.paymentDueDate,
+          paymentDueDateUnix: this.paymentDueDateUnix,
+          productDescription: this.productDescription,
+          invoiceItemList: this.invoiceItemList,
+          invoiceTotal: this.invoiceTotal,
+          invoicePending: this.invoicePending,
+          invoiceDraft: this.invoiceDraft,
+          invoicePaid: null,
+        },
+        { capital: true },
+        { merge: true }
+      );
 
-      const database = firebaseApp.collection("invoices").doc();
-
-      await database.set({
-        invoiceId: uid(6),
-        billerStreetAddress: this.billerStreetAddress,
-        billerCity: this.billerCity,
-        billerZipCode: this.billerZipCode,
-        billerCountry: this.billerCountry,
-        clientName: this.clientName,
-        clientEmail: this.clientEmail,
-        clientStreetAddress: this.clientStreetAddress,
-        clientCity: this.clientCity,
-        clientZipCode: this.clientZipCode,
-        clientCountry: this.clientCountry,
-        invoiceDate: this.invoiceDate,
-        invoiceDateUnix: this.invoiceDateUnix,
-        paymentTerms: this.paymentTerms,
-        paymentDueDate: this.paymentDueDate,
-        paymentDueDateUnix: this.paymentDueDateUnix,
-        productDescription: this.productDescription,
-        invoiceItemList: this.invoiceItemList,
-        invoiceTotal: this.invoiceTotal,
-        invoicePending: this.invoicePending,
-        invoiceDraft: this.invoiceDraft,
-        invoicePaid: null,
-      });
+      this.loading = false;
+      this.TOGGLE_INVOICE();
     },
 
     submitForm() {
@@ -425,6 +440,15 @@ export default {
 
     saveDraft() {
       this.invoiceDraft = true;
+    },
+
+    checkClick(e) {
+      console.log("e.target is", e.target);
+
+      console.log("this.$refs is ", this.$refs.invoiceWrap);
+      if (e.target === this.$refs.invoiceWrap) {
+        this.TOGGLE_MODAL();
+      }
     },
   },
 
