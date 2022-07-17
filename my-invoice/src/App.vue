@@ -1,7 +1,7 @@
 
 
 <template>
-  <div>
+  <div v-if="invoicesLoaded">
     <div class="flex flex-row">
       <Nav />
       <div class="container py-32 mx-auto md:px-32 xl:px-72">
@@ -25,7 +25,7 @@ import Modal from "./components/Modal.vue";
 export default {
   components: { Nav, InvoiceModal, Modal },
   computed: {
-    ...mapState(["invoiceModal", "modalActive"]),
+    ...mapState(["invoiceModal", "modalActive", "invoicesLoaded"]),
   },
 
   created() {

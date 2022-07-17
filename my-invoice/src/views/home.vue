@@ -44,17 +44,27 @@
           </div>
         </div>
       </div>
+
+      <div class="">
+        <Invoice
+          v-for="(invoice, index) in invoiceData"
+          :invoice="invoice"
+          :key="index"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { Icon } from "@iconify/vue";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
+import Invoice from "../components/Invoice.vue";
 
 export default {
   components: {
     Icon,
+    Invoice,
   },
 
   data() {
@@ -65,6 +75,10 @@ export default {
 
   mounted() {
     console.log("object");
+  },
+
+  computed: {
+    ...mapState(["invoiceData"]),
   },
 
   methods: {
