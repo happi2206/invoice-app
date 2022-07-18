@@ -45,12 +45,24 @@
         </div>
       </div>
 
-      <div class="">
+      <div class="" v-if="invoiceData.length > 0">
         <Invoice
           v-for="(invoice, index) in invoiceData"
           :invoice="invoice"
           :key="index"
         />
+      </div>
+
+      <div v-else class="flex justify-center mt-32 text-center align-center">
+        <div>
+          <div class="flex justify-center">
+            <Icon icon="twemoji:empty-nest" width="100" height="100" />
+          </div>
+          <h1 class="mt-5 text-sm text-center">There is nothing here</h1>
+          <p class="text-xs text-center">
+            Click on create invoice to create a new invoice
+          </p>
+        </div>
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@
   <div v-if="invoicesLoaded">
     <div class="flex flex-row">
       <Nav />
-      <div class="container py-32 mx-auto md:px-32 xl:px-72">
+      <div class="container py-32 mx-auto md:px-32 xl:px-40">
         <Modal v-if="modalActive" />
         <transition name="invoice">
           <InvoiceModal v-if="invoiceModal" />
