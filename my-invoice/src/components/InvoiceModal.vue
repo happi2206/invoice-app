@@ -311,7 +311,7 @@
 import { db, firebaseApp } from "../firebase/firebaseinit";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { Icon } from "@iconify/vue";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import { uid } from "uid";
 export default {
   name: "invoiceModal",
@@ -343,24 +343,58 @@ export default {
       invoiceDraft: null,
       invoiceItemList: [],
       invoiceTotal: 0,
-      editInvoice: false,
+      // editInvoice: false,
     };
   },
 
   created() {
-    this.invoiceDateUnix = Date.now();
+    if (!this.editInvoice) {
+      this.invoiceDateUnix = Date.now();
 
-    this.invoiceDate = new Date(this.invoiceDateUnix).toLocaleDateString(
-      "en-us",
-      this.dateOptions
-    );
+      this.invoiceDate = new Date(this.invoiceDateUnix).toLocaleDateString(
+        "en-us",
+        this.dateOptions
+      );
+    }
+
+    if (this.editInvoice) {
+      const currentInvoice = this.currentInvoiceArray[0];
+      this.docId = currentInvoice.docId;
+      this.billerStreetAddress = currentInvoice.billerStreetAddress;
+      this.billerCity = currentInvoice.billerCity;
+      this.billerZipCode = currentInvoice.billerZipCode;
+      this.billerCountry = currentInvoice.billerCountry;
+      this.clientName = currentInvoice.clientName;
+      this.clientEmail = currentInvoice.clientEmail;
+      this.clientStreetAddress = currentInvoice.clientStreetAddress;
+      this.clientCity = currentInvoice.clientCity;
+      this.clientZipCode = currentInvoice.clientZipCode;
+      this.clientCountry = currentInvoice.clientCountry;
+      this.invoiceDateUnix = currentInvoice.invoiceDateUnix;
+      this.invoiceDate = currentInvoice.invoiceDate;
+      this.paymentTerms = currentInvoice.paymentTerms;
+      this.paymentDueDateUnix = currentInvoice.paymentDueDateUnix;
+      this.paymentDueDate = currentInvoice.paymentDueDate;
+      this.productDescription = currentInvoice.productDescription;
+      this.invoicePending = currentInvoice.invoicePending;
+      this.invoiceDraft = currentInvoice.invoiceDraft;
+      this.invoiceItemList = currentInvoice.invoiceItemList;
+      this.invoiceTotal = currentInvoice.invoiceTotal;
+    }
+  },
+
+  computed: {
+    ...mapState(["editInvoice"]),
   },
 
   methods: {
-    ...mapMutations(["TOGGLE_INVOICE", "TOGGLE_MODAL"]),
+    ...mapMutations(["TOGGLE_INVOICE", "TOGGLE_MODAL", "TOGGLE_EDIT_INVOICE"]),
 
     closeInvoice() {
       this.TOGGLE_INVOICE();
+      if (this.editInvoice) {
+        this.TOGGLE_EDIT_INVOICE();
+      }
     },
 
     addNewInvoiceItem() {

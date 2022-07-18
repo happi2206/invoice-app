@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 export default {
   name: "modal",
 
@@ -54,7 +54,14 @@ export default {
     closeInvoice() {
       this.TOGGLE_INVOICE();
       this.TOGGLE_MODAL();
+
+      if (this.editInvoice) {
+        this.TOGGLE_EDIT_INVOICE();
+      }
     },
+  },
+  computed: {
+    ...mapState(["editInvoice"]),
   },
 };
 </script>
