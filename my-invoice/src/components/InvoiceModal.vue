@@ -384,7 +384,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["editInvoice"]),
+    ...mapState(["editInvoice", "currentInvoiceArray"]),
   },
 
   methods: {
