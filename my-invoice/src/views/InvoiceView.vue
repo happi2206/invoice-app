@@ -142,6 +142,7 @@
 <script>
 import { mapMutations, mapState } from "vuex";
 import { Icon } from "@iconify/vue";
+import { threadId } from "worker_threads";
 export default {
   name: "invoiceView",
   data() {
@@ -172,7 +173,15 @@ export default {
     },
   },
   computed: {
-    ...mapState(["currentInvoiceArray"]),
+    ...mapState(["currentInvoiceArray", "editInvoice"]),
+  },
+
+  watch: {
+    editInvoice() {
+      if (!this.editInvoice) {
+        this.currentInvoice = this.currentInvoiceArray[0];
+      }
+    },
   },
 };
 </script>

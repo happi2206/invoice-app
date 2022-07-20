@@ -311,7 +311,7 @@
 import { db, firebaseApp } from "../firebase/firebaseinit";
 import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import { Icon } from "@iconify/vue";
-import { mapMutations, mapState } from "vuex";
+import { mapMutations, mapState, mapActions } from "vuex";
 import { uid } from "uid";
 export default {
   name: "invoiceModal",
@@ -390,6 +390,7 @@ export default {
   methods: {
     ...mapMutations(["TOGGLE_INVOICE", "TOGGLE_MODAL", "TOGGLE_EDIT_INVOICE"]),
 
+    ...mapActions(["UPDATE_INVOICE"]),
     closeInvoice() {
       this.TOGGLE_INVOICE();
       if (this.editInvoice) {

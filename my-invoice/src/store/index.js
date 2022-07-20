@@ -87,6 +87,11 @@ export default createStore({
       commit('TOGGLE_EDIT_INVOICE');
       commit('SET_CURRENT_INVOICE', routeId);
     },
+    async DELETE_INVOICE({ commit }, docId) {
+      const getInvoice = invoiceData;
+
+      await deleteDoc(doc(db, 'invoice', docId));
+    },
   },
   modules: {},
 });
